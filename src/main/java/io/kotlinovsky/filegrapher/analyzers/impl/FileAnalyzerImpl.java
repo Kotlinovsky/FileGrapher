@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Реализация [IFileAnalyzer].
+ * Осуществляет поиск зависимостей, указанных с помощью директивы require.
+ */
 public class FileAnalyzerImpl implements IFileAnalyzer {
 
     private static final String REQUIRE_PATH_GROUP = "Path";
