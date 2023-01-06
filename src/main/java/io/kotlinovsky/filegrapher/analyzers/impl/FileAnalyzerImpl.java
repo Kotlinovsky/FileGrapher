@@ -31,6 +31,7 @@ public class FileAnalyzerImpl implements IFileAnalyzer {
                     .filter(Matcher::matches)
                     .map(matcher -> matcher.group(REQUIRE_PATH_GROUP))
                     .map(Path::of)
+                    .filter(Files::exists)
                     .collect(Collectors.toSet());
         }
     }

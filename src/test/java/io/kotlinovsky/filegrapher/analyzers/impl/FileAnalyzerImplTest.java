@@ -88,7 +88,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.deleteIfExists(tempDependencyFilePath);
         Path tempFilePath = Files.createTempFile("test", "analyzer");
-        Files.writeString(tempFilePath, "require " + tempDependencyFilePath + "'");
+        Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "'");
 
         Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
         assertEquals(0, dependencies.size());
@@ -98,7 +98,7 @@ public class FileAnalyzerImplTest {
     public void testWhenRequireOperatorIsNotEndOfLine() throws IOException {
         Path tempFilePath = Files.createTempFile("test", "analyzer");
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
-        Files.writeString(tempFilePath, "require " + tempDependencyFilePath + "' fff");
+        Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "' fff");
 
         Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
         assertEquals(0, dependencies.size());
