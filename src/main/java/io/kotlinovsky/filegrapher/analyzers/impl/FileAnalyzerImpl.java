@@ -3,6 +3,7 @@ package io.kotlinovsky.filegrapher.analyzers.impl;
 import io.kotlinovsky.filegrapher.analyzers.IFileAnalyzer;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +31,8 @@ public class FileAnalyzerImpl implements IFileAnalyzer {
                     .map(REQUIRE_PATTERN::matcher)
                     .filter(Matcher::matches)
                     .map(matcher -> matcher.group(REQUIRE_PATH_GROUP))
+                    .map(dependency -> dependency.replaceAll("\\\\", File.separator))
+                    .map(dependency -> dependency.replaceAll("/", File.separator))
                     .map(Path::of)
                     .filter(Files::exists)
                     .collect(Collectors.toSet());

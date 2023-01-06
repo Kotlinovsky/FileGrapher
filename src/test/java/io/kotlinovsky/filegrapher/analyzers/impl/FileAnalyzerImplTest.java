@@ -135,4 +135,26 @@ public class FileAnalyzerImplTest {
         Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
         assertEquals(0, dependencies.size());
     }
+
+    @Test
+    public void testRequireOperatorWithLeftSlashes() throws IOException {
+        Path tempFilePath = Files.createTempFile("test", "analyzer");
+        Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
+        Files.writeString(tempFilePath, "require '" + tempDependencyFilePath.toString().replaceAll("/", "\\\\") + "'");
+
+        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        assertEquals(1, dependencies.size());
+        assertTrue(dependencies.contains(tempDependencyFilePath));
+    }
+
+    @Test
+    public void testRequireOperatorWithRightSlashes() throws IOException {
+        Path tempFilePath = Files.createTempFile("test", "analyzer");
+        Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
+        Files.writeString(tempFilePath, "require '" + tempDependencyFilePath.toString().replaceAll("\\\\", "/") + "'");
+
+        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        assertEquals(1, dependencies.size());
+        assertTrue(dependencies.contains(tempDependencyFilePath));
+    }
 }
