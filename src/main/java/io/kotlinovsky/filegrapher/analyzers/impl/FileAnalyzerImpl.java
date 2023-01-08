@@ -32,13 +32,15 @@ public class FileAnalyzerImpl implements IFileAnalyzer {
     @Override
     public Set<Path> getDependencies(Path path) throws IOException {
         try (Stream<String> linesStream = Files.lines(path)) {
+            Path directoryPath = path.getParent();
+
             return linesStream
                     .map(REQUIRE_PATTERN::matcher)
                     .filter(Matcher::matches)
                     .map(matcher -> matcher.group(REQUIRE_PATH_GROUP))
                     .map(dependency -> dependency.replaceAll("\\\\", File.separator))
                     .map(dependency -> dependency.replaceAll("/", File.separator))
-                    .map(Path::of)
+                    .map(directoryPath::resolve)
                     .filter(Files::exists)
                     .collect(Collectors.toSet());
         }
