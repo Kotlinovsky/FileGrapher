@@ -5,6 +5,7 @@ import io.kotlinovsky.filegrapher.interactors.IGraphBuildInteractor;
 import io.kotlinovsky.filegrapher.models.FileModel;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -24,6 +25,7 @@ public class GraphBuildInteractorImpl implements IGraphBuildInteractor {
 
     private final IFileAnalyzer fileAnalyzer;
 
+    @Inject
     public GraphBuildInteractorImpl(@Nonnull IFileAnalyzer fileAnalyzer) {
         this.fileAnalyzer = fileAnalyzer;
     }

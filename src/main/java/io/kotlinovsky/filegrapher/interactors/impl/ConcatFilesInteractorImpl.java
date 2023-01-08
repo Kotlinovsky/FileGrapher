@@ -2,6 +2,7 @@ package io.kotlinovsky.filegrapher.interactors.impl;
 
 import io.kotlinovsky.filegrapher.interactors.IConcatFilesInteractor;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +16,10 @@ import java.util.stream.Stream;
  * за счет чего не расходует много ОЗУ на хранение содержимого итогового файла.
  */
 public class ConcatFilesInteractorImpl implements IConcatFilesInteractor {
+
+    @Inject
+    public ConcatFilesInteractorImpl() {
+    }
 
     @Override
     public void concatFiles(List<Path> paths, Consumer<String> onLineRead) throws IOException {

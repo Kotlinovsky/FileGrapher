@@ -4,6 +4,7 @@ import io.kotlinovsky.filegrapher.interactors.ICycleCheckInteractor;
 import io.kotlinovsky.filegrapher.models.FileModel;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,6 +15,10 @@ import java.util.stream.Collectors;
  * запоминании и сверки статусов обработки вершин.
  */
 public class CycleCheckInteractorImpl implements ICycleCheckInteractor {
+
+    @Inject
+    public CycleCheckInteractorImpl() {
+    }
 
     @Override
     public boolean checkCircularDependencies(@Nonnull List<FileModel> graph) {
