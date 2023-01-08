@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,7 +30,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "f require '" + tempDependencyFilePath + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -39,7 +40,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "req '" + tempDependencyFilePath + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -49,7 +50,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require'" + tempDependencyFilePath + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -59,7 +60,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require " + tempDependencyFilePath + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -69,7 +70,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath);
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -78,7 +79,7 @@ public class FileAnalyzerImplTest {
         Path tempFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require ''");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -90,7 +91,7 @@ public class FileAnalyzerImplTest {
         Path tempFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -100,7 +101,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "' fff");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -110,7 +111,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(1, dependencies.size());
         assertTrue(dependencies.contains(tempDependencyFilePath));
     }
@@ -121,7 +122,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "'  ");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(1, dependencies.size());
         assertTrue(dependencies.contains(tempDependencyFilePath));
     }
@@ -132,7 +133,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath + "' ff");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(0, dependencies.size());
     }
 
@@ -142,7 +143,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath.toString().replaceAll("/", "\\\\") + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(1, dependencies.size());
         assertTrue(dependencies.contains(tempDependencyFilePath));
     }
@@ -153,7 +154,7 @@ public class FileAnalyzerImplTest {
         Path tempDependencyFilePath = Files.createTempFile("test", "analyzer");
         Files.writeString(tempFilePath, "require '" + tempDependencyFilePath.toString().replaceAll("\\\\", "/") + "'");
 
-        Set<Path> dependencies = fileAnalyzer.getDependencies(tempFilePath);
+        Set<Path> dependencies = fileAnalyzer.getDependencies(Paths.get(""), tempFilePath);
         assertEquals(1, dependencies.size());
         assertTrue(dependencies.contains(tempDependencyFilePath));
     }

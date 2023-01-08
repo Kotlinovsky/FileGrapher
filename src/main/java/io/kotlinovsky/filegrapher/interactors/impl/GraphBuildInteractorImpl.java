@@ -49,7 +49,7 @@ public class GraphBuildInteractorImpl implements IGraphBuildInteractor {
 
             while (iterator.hasNext()) {
                 Path current = iterator.next();
-                Set<Path> dependsFrom = fileAnalyzer.getDependencies(current);
+                Set<Path> dependsFrom = fileAnalyzer.getDependencies(path, current);
                 FileModel fileModel = new FileModel(current, dependsFrom);
                 fileModels.add(fileModel);
             }

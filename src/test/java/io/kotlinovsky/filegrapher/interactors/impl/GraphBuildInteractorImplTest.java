@@ -8,10 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.NotDirectoryException;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.List;
 import java.util.Set;
 
@@ -59,8 +56,8 @@ public class GraphBuildInteractorImplTest {
         Path tempSecondFilePath = Files.createFile(tempDirectoryPath.resolve("second-file"));
         Path tempThirdFilePath = Files.createFile(tempDirectoryPath.resolve("third-file"));
 
-        Mockito.when(fileAnalyzer.getDependencies(tempFirstFilePath)).thenReturn(Set.of(tempSecondFilePath));
-        Mockito.when(fileAnalyzer.getDependencies(tempSecondFilePath)).thenReturn(Set.of(tempFirstFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempFirstFilePath)).thenReturn(Set.of(tempSecondFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempSecondFilePath)).thenReturn(Set.of(tempFirstFilePath));
 
         List<FileModel> fileModels = interactor.buildGraph(tempDirectoryPath);
         assertEquals(3, fileModels.size());
@@ -77,8 +74,8 @@ public class GraphBuildInteractorImplTest {
         Path tempThirdFilePath = Files.createFile(tempDirectoryPath.resolve("third-file"));
         Files.createDirectory(tempDirectoryPath.resolve("empty-directory"));
 
-        Mockito.when(fileAnalyzer.getDependencies(tempFirstFilePath)).thenReturn(Set.of(tempSecondFilePath));
-        Mockito.when(fileAnalyzer.getDependencies(tempSecondFilePath)).thenReturn(Set.of(tempFirstFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempFirstFilePath)).thenReturn(Set.of(tempSecondFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempSecondFilePath)).thenReturn(Set.of(tempFirstFilePath));
 
         List<FileModel> fileModels = interactor.buildGraph(tempDirectoryPath);
         assertEquals(3, fileModels.size());
@@ -97,10 +94,10 @@ public class GraphBuildInteractorImplTest {
         Path tempFourthFilePath = Files.createFile(tempFirstFolderPath.resolve("fourth-file"));
         Path tempFifthFilePath = Files.createFile(tempFirstFolderPath.resolve("fifth-file"));
 
-        Mockito.when(fileAnalyzer.getDependencies(tempFirstFilePath)).thenReturn(Set.of(tempSecondFilePath));
-        Mockito.when(fileAnalyzer.getDependencies(tempSecondFilePath)).thenReturn(Set.of(tempFirstFilePath));
-        Mockito.when(fileAnalyzer.getDependencies(tempThirdFilePath)).thenReturn(Set.of(tempFourthFilePath));
-        Mockito.when(fileAnalyzer.getDependencies(tempFourthFilePath)).thenReturn(Set.of(tempThirdFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempFirstFilePath)).thenReturn(Set.of(tempSecondFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempSecondFilePath)).thenReturn(Set.of(tempFirstFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempThirdFilePath)).thenReturn(Set.of(tempFourthFilePath));
+        Mockito.when(fileAnalyzer.getDependencies(tempDirectoryPath, tempFourthFilePath)).thenReturn(Set.of(tempThirdFilePath));
 
         List<FileModel> fileModels = interactor.buildGraph(tempDirectoryPath);
         assertEquals(5, fileModels.size());
