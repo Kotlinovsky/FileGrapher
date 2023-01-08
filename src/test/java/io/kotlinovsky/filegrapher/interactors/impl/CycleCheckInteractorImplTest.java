@@ -132,4 +132,9 @@ public class CycleCheckInteractorImplTest {
                 new FileModel(fifthFilePath, Set.of(fourthFilePath))
         )));
     }
+
+    @Test
+    public void checkThatFalseWhenGraphEmpty() {
+        assertFalse(interactor.checkCircularDependencies(List.of()));
+    }
 }
